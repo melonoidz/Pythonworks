@@ -15,7 +15,7 @@ csv_files = sorted(glob.glob('*.csv'))
 
 
 # 縮小倍率
-limit = 20
+limit = 1
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -29,12 +29,10 @@ for i in range(len(csv_files)/3-1):
         xnp = x / limit
         ynp = y / limit
         znp = z / limit
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
-        ax.set_zlabel('z')
+
         ax.set_autoscalez_on(False)
-        ax.view_init(9.0, 45.0)
-        ax.set_xlim(0, 10), ax.set_ylim(0, 10), ax.set_zlim(0, 10)
+        # view_init(縦, 横) ≦90がよい
+        ax.view_init(45, 90)
         plt.cla()
         ax.scatter(xnp, ynp, znp)
 
@@ -67,6 +65,8 @@ for i in range(len(csv_files)/3-1):
         ax.plot(*zip(p9, p10))
         ax.plot(*zip(p11, p12))
         ax.plot(*zip(p12, p13))
-
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
         filename = str(i+1) + ".png"
         plt.savefig(filename)
